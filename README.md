@@ -106,6 +106,8 @@ Once `terraform apply` completes, run the shell script `sh config-launch-k8-dash
 Authenticate to the Kubernetes Dashbaord via `Kubeconfig` and select the file `~/.kube/config`.
 
 In a separate console, you can run the following commands to launch a multi-tiered application:
+
+
 Source: https://k8s.camp/workshop/intro/#257
 
 ```shell
@@ -137,7 +139,7 @@ To follow the logs of the worker pod
 
 To connect to the webui, copy/past the `EXTERNAL-IP` into your web browser (give it a few seconds)
 
-Have fun increasing replicas of the services (via CLI or YAML)
+Have fun increasing replicas of the pods/services (via CLI or YAML)
 
 To clean up you k8 deployment
 
