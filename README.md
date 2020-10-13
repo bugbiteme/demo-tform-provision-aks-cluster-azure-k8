@@ -98,3 +98,51 @@ Press CTRL+C to close the tunnel...
 ```
 
  You should be able to access the Kubernetes dashboard at [http://127.0.0.1:8001/](http://127.0.0.1:8001/).
+
+## Additional notes
+
+Once `terraform apply` completes, run the shell script `sh config-launch-k8-dashboard.sh` to enable and run the k8 dashboard
+
+Authenticate to the Kubernetes Dashbaord via `Kubeconfig` and select the file `~/.kube/config`.
+
+In a separate console, you can run the following commands to launch a multi-tiered application:
+Source: https://k8s.camp/workshop/intro/#257
+
+```shell
+kubectl apply -f ./dockercoins.yaml
+
+kubectl get pods
+
+NAME                      READY   STATUS    RESTARTS   AGE
+hasher-99d4fdc78-27fnj    1/1     Running   0          52s
+redis-65fd448c9b-bjvhv    1/1     Running   0          52s
+rng-6979b4858b-zffvg      1/1     Running   0          52s
+webui-97d9f77cf-bl664     1/1     Running   0          52s
+worker-598788db65-nf65w   1/1     Running   0          52s
+
+kubectl get svc
+
+NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+hasher       ClusterIP   10.0.128.6     <none>        80/TCP         103s
+kubernetes   ClusterIP   10.0.0.1       <none>        443/TCP        11m
+redis        ClusterIP   10.0.160.51    <none>        6379/TCP       103s
+rng          ClusterIP   10.0.107.153   <none>        80/TCP         103s
+webui        NodePort    10.0.14.108    40.64.104.3   80:31242/TCP   103s
+```
+
+To follow the logs of the worker pod
+
+`kubectl logs deploy/worker --follow`
+
+
+To connect to the webui, copy/past the `EXTERNAL-IP` into your web browser (give it a few seconds)
+
+Have fun increasing replicas of the services (via CLI or YAML)
+
+To clean up you k8 deployment
+
+`kubectl delete -f dockercoins.yaml`
+
+To destroy this k8 cluster
+
+`terraform destroy`
